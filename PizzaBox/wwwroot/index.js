@@ -1,23 +1,16 @@
-﻿
+﻿var storeDisplay = document.getElementById("storeDisplay");
 
-function testJSON() {
-    const bodies = {
-        fname: "Ross",
-        lname: "Plyler"
-    };
-
-    fetch('api/Acustomer', {
-        method: 'POST',
-        body: JSON.stringify(bodies),
-        headers: { 'Content-Type': 'application/json' },
-    })
-        .then(res => res.json())
-        .then(json => console.log(json));
-
-    fetch('api/Ainventorydetail')
-        .then(response =>response.json())
-        .then(data => { console.log(data); });
+async function displayStores() {
+    storeDisplay.innerHtml = "";
+    await fetch("api/astoredetail")
+        .then(Response => Response.json())
+        .then(data => data.forEach(store => {
+            console.log(store);
+            var img = document.createElement('img');
+            img.src = store.srcImg;
+            storeDisplay.innerHTML += "<br>"+store.descript + "<br>";
+            storeDisplay.appendChild(img);
+        }));
 }
-
-testJSON();
+displayStores();
 

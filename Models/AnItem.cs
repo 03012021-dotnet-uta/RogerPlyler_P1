@@ -17,6 +17,7 @@ namespace Models
         public string ItemName { get; set; }
         public decimal? Price { get; set; }
 
+        public virtual AnItemDetail AnItemDetail { get; set; }
         public virtual ICollection<AorderDetail> AorderDetails { get; set; }
         public virtual ICollection<InventoryDetail> InventoryDetails { get; set; }
     }

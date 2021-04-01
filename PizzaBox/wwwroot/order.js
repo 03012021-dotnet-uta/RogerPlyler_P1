@@ -38,6 +38,9 @@ var storeView = document.getElementById("StoreSection");
 var itemView = document.getElementById("ItemSection");
 var cartView = document.getElementById("CartSection");
 
+//Displays For Stores and Items
+var storeInfo = document.getElementById("storeDisplay");
+var itemInfo = document.getElementById("itemDisplay");
 
 
 
@@ -201,7 +204,7 @@ function pendingRemove(cartID) {
 }
 
 function removeFromCart(amountToRemove) {
-    fullCart[cartID].amount -= amountToRemove;
+    fullCart[pendingRemoveItem].amount -= amountToRemove;
     removeInput.innerHTML = "";
     updateCart();
 }
@@ -244,4 +247,31 @@ async function validateCart() {
         alert("order is no longer valid");
     }
     
+}
+
+displayStores(1);
+function displayStores(displayingStore) {
+    storeInfo.innerHTML = "";
+    console.log("Displaying store " + displayingStore);
+    fetch("api/astoredetail/" + displayingStore)
+        .then(response => response.json())
+        .then(data => {
+            var img = document.createElement('img');
+            img.src = data.srcImg;
+            storeInfo.innerHTML += "<br>" + data.descript + "<br>";
+            storeInfo.appendChild(img);
+        });
+}
+
+function displayItems(displayingitem) {
+    itemInfo.innerHTML = "";
+    console.log("Displaying store " + displayingitem);
+    fetch("api/anitemdetail/" + displayingitem)
+        .then(response => response.json())
+        .then(data => {
+            var img = document.createElement('img');
+            img.src = data.srcImg;
+            itemInfo.innerHTML += "<br>" + data.descript + "<br>";
+            itemInfo.appendChild(img);
+        });
 }

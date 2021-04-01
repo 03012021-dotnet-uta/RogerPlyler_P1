@@ -20,9 +20,11 @@ namespace Repository
 
         public virtual DbSet<Acustomer> Acustomers { get; set; }
         public virtual DbSet<AnItem> AnItems { get; set; }
+        public virtual DbSet<AnItemDetail> AnItemDetails { get; set; }
         public virtual DbSet<Aorder> Aorders { get; set; }
         public virtual DbSet<AorderDetail> AorderDetails { get; set; }
         public virtual DbSet<Astore> Astores { get; set; }
+        public virtual DbSet<AstoreDetail> AstoreDetails { get; set; }
         public virtual DbSet<InventoryDetail> InventoryDetails { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -70,6 +72,29 @@ namespace Repository
                     .IsUnicode(false);
 
                 entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+            });
+
+            modelBuilder.Entity<AnItemDetail>(entity =>
+            {
+                entity.ToTable("AnItemDetail");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Descript)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SrcImg)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.AnItemDetail)
+                    .HasForeignKey<AnItemDetail>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AnItemDetail__ID__49C3F6B7");
             });
 
             modelBuilder.Entity<Aorder>(entity =>
@@ -138,6 +163,29 @@ namespace Repository
                 entity.Property(e => e.StoreName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<AstoreDetail>(entity =>
+            {
+                entity.ToTable("AStoreDetail");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Descript)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SrcImg)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.AstoreDetail)
+                    .HasForeignKey<AstoreDetail>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__AStoreDetail__ID__4CA06362");
             });
 
             modelBuilder.Entity<InventoryDetail>(entity =>

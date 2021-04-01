@@ -46,3 +46,18 @@ Total Decimal(10,2),
 Primary Key(ID),
 FOREIGN KEY(OrderID) References AOrder(ORDERID),
 FOREIGN KEY(ItemID) References AnItem(ID));
+
+Create Table AnItemDetail(
+ID int,
+Descript varChar(1000),
+SrcImg varChar(1000),
+Primary Key(ID),
+Foreign Key(ID) references AnItem(ID)
+)
+Create table AStoreDetail(
+ID int,
+Descript varChar(1000),
+SrcImg varChar(1000),
+Primary Key(ID),
+Foreign Key(ID) references AStore(ID)
+)

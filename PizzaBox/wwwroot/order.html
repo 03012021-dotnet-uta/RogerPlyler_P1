@@ -30,17 +30,18 @@
     <div id="output"></div>
 
     <div id="StoreSection">
-        <form onsubmit="viewstores(this.chooseStore.value);return false;">
+        <form onchange="displayStores(this.chooseStore.value);return false;" onsubmit="viewstores(this.chooseStore.value);return false;">
             <label for="stores">Select a store to view</label>
             <select id="stores" name="chooseStore">
             </select>
             <input type="submit" value="submit">
         </form>
+        <div id="storeDisplay"></div>
     </div>
 
 
     <div id="ItemSection">
-        <form onsubmit="pendingCart(this.addItem.value);return false;">
+        <form onchange="displayItems(this.addItem.value); return false;" onsubmit="pendingCart(this.addItem.value);return false;">
             <label for="items">Add Item To Cart</label>
             <select id="items" name="addItem">
             </select>
@@ -52,6 +53,7 @@
             </select>
             <input type="submit" value="submit">
         </form>
+        <div id="itemDisplay"></div>
     </div>
     <div id="CartSection">
         <form onsubmit="pendingRemove(this.removeItem.value);return false;">
