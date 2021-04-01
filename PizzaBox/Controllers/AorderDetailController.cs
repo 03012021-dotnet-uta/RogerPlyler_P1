@@ -17,7 +17,16 @@ namespace PizzaBox.Controllers
         {
             orderDetails = _orderDetails;
         }
+        [HttpGet]
+        [Route("api/[controller]/max")]
+        public IActionResult IOrderNum()
+        {
+            Logic buis = new Logic();
+            return Ok(buis.GetMaxOrderID());
 
+        }
+
+         
         [HttpGet]
         [Route("api/[controller]/{id}")]
         public IActionResult getOrderDetails(int id) //NOTE: LOOK UP IF YOU NEED THE THING IN THE URL NEEDS OT MATCH WHAT IS CALLED
@@ -42,11 +51,11 @@ namespace PizzaBox.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/submit/{ordernum}/{itemnum}/{amount}")]
-        public IActionResult addOrderDetails(int ordernum,int itemnum,int amount)
+        [Route("api/[controller]/submit/{ordernum}/{itemnum}/{amount}/{detailnum}")]
+        public IActionResult addOrderDetails(int ordernum,int itemnum,int amount,int detailnum)
         {
             Logic buis = new Logic();
-            buis.NewOrderDetail(ordernum, itemnum, amount);
+            buis.NewOrderDetail(ordernum, itemnum, amount,detailnum);
             return Ok(100);
         }
     }

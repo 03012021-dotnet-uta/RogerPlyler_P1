@@ -39,6 +39,16 @@ namespace BuisnessLogic
             return order;
         }
 
+        public int GetMaxOrderID()
+        {
+            return ((context.AorderDetails.Any(o => o.Id == 1)) ? context.AorderDetails.Max(o => o.Id) + 1 : 1);
+        }
+
+        /// <summary>
+        /// Adds a new custmer
+        /// </summary>
+        /// <param name="cust"></param>
+        /// <returns></returns>
         public Acustomer AddNewCustomer(Acustomer cust)
         {
 
@@ -55,7 +65,7 @@ namespace BuisnessLogic
         /// <param name="itemNum"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public decimal NewOrderDetail(int orderNum, int itemNum, int amount)
+        public decimal NewOrderDetail(int orderNum, int itemNum, int amount,int detailnum)
         {
             Aorder getorder = context.Aorders.FirstOrDefault(o=> o.OrderId == orderNum);
             List<InventoryDetail> inventory = context.InventoryDetails.ToList();
@@ -65,7 +75,7 @@ namespace BuisnessLogic
            
                 AorderDetail newDetail = new AorderDetail()
             {
-               Id = ((context.AorderDetails.Any(o => o.Id == 1)) ? context.AorderDetails.Max(o => o.Id) + 1 : 1),
+                Id = detailnum,
                 OrderId = orderNum,
                 ItemId = itemNum,
                 Total = Convert.ToDecimal(amount)

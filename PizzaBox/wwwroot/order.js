@@ -5,6 +5,7 @@ var itemPrice = [0.00];
 var itemID = [0];
 var pendingItem = 0;
 var pendingRemoveItem = 0;
+var orderID;
 
 var FirstName = "";
 var LastName = "";
@@ -210,26 +211,37 @@ function removeFromCart(amountToRemove) {
 }
 
 function submitOrder() {
-    alert("Order Has Been Submitted")
-    if (customerID <= 0 || customerID == null || fullCart.length == 0) {
+   
+    if (customerID <= 0 || customerID == null) {
         alert("Please log in");
+    } else if (fullCart.length == 0) {
+        alert("Your Cart is empty");
     } else {
+        alert("Order Has Been Submitted");
         fetch('api/aorder/' + customerID + '/' + storenum + '/' + total)
             .then(response => response.json())
-            .then(data => { console.log(data); submitCart(data.orderId); });
+            .then(data => { orderID = data.orderId; submitCart(); });
+            //.then(data => { orderID = data.orderId; submitCart(data.orderId); });
     }
 
 }
-
-function submitCart(orderNum) {
+//had ordernumber in her before hand
+function submitCart() {
+    fetch('api/aorderdetail/max')
+        .then(response => response.json())
+        .then(data => awaitCart(data))
     
-    console.log(orderNum);
-    fullCart.forEach(item => {
-        console.log(item);
-       fetch('api/aorderDetail/submit/' + orderNum + '/' + item.itemId + '/' + item.amount)
-            .then(response => response.json())
-            .then(data => { console.log(data); })
-    });
+     
+}
+ function awaitCart(detailsNum){
+     fullCart.forEach(item => {
+         console.log(item);
+         fetch('api/aorderDetail/submit/' + orderID + '/' + item.itemId + '/' + item.amount +"/" + detailsNum)
+             .then(response => response.json())
+             .then(data => { console.log(data); })
+         detailsNum += 1;
+
+     });
 }
 
 async function validateCart() {
