@@ -15,11 +15,11 @@ async function displayOrders(orders) {
 }
 
 function displayItems(order, items) {
-    outputFeild.innerHTML += "<br>Order " + order.orderId + "order date" + order.orderTime;
+    outputFeild.innerHTML += "<br><b>Order #" + order.orderId + "order date:  " + order.orderTime + "</b> ";
     
     for (i = 0; i < items.length; i++) {
         console.log(items[i]);
-        outputFeild.innerHTML += "<br>Item #" + items[i].itemId;
+        outputFeild.innerHTML += "<br>----Item #" + items[i].itemId + " amount " + items[i].total;
     }
 
 }

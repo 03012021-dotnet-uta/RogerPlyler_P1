@@ -121,7 +121,7 @@ function addToInventory(stock) {
             var input = parseInt(item.itemId);
             fetch('api/Anitem/' + input)
                 .then(Response => Response.json())
-                .then(data => { itemInput.add(new Option(data.itemName, data.id)); });
+                .then(data => { itemInput.add(new Option(data.itemName +" " + data.price, data.id)); });
         }
     });
 }
@@ -187,7 +187,7 @@ async function updateCart() {
             .then(data => {
                 console.log(data);
                 total += fullCart[i].amount * data.price;
-                cartInput.add(new Option(fullCart[i].itemId + " " + data.itemName + " " + fullCart[i].amount * data.price, i));
+                cartInput.add(new Option(fullCart[i].amount + " " + data.itemName + " " + fullCart[i].amount * data.price, i));
             })
         
     }
